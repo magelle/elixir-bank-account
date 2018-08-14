@@ -1,4 +1,4 @@
-defmodule BankAccountElixir.MixProject do
+defmodule BankAccount.MixProject do
   use Mix.Project
 
   def project do

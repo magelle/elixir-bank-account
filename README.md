@@ -1,11 +1,11 @@
-# BankAccountElixir
+# BankAccount
 
 **TODO: Add description**
 
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `bank_account_elixir` to your list of dependencies in `mix.exs`:
+by adding `bank_account` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
