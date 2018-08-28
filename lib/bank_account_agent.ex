@@ -5,7 +5,7 @@ defmodule BankAccountAgent do
   Create a new account
   """
   def create() do
-    {:ok, account} = BankAccount.create() 
+    {:ok, account} = BankAccount.create()
     Agent.start_link(fn -> account end)
   end
 
@@ -15,7 +15,7 @@ defmodule BankAccountAgent do
   def balance(accountRef) do
     Agent.get(accountRef, &BankAccount.balance(&1))
   end
-  
+
   @doc """
   Make a deposit
   """
@@ -36,7 +36,7 @@ defmodule BankAccountAgent do
 
   defp update(accountRef, {:ok, account}) do
     Agent.update(accountRef, fn _ -> account end)
-    {:ok}
+    :ok
   end
 
   defp update(_, {:error, errorMsg}) do

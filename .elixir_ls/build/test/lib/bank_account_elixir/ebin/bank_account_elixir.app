@@ -1,0 +1,9 @@
+{application,bank_account_elixir,
+             [{applications,[kernel,stdlib,elixir,logger]},
+              {description,"bank_account_elixir"},
+              {modules,['Elixir.App','Elixir.Bank','Elixir.BankAccount',
+                        'Elixir.BankAccountAgent','Elixir.MySupervisor',
+                        'Elixir.Router']},
+              {registered,[]},
+              {vsn,"0.1.0"},
+              {mod,{'Elixir.App',[]}}]}.
