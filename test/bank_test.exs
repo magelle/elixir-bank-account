@@ -35,7 +35,9 @@ defmodule BankTest do
   test "Transaction when debtor account does not exists", %{bank: bank} do
     Bank.create_account(bank, "creditor_account")
 
-    assert Bank.transfer(bank, "unknown_account", "creditor_account", 10) == {:error, :unknown_account}
+    assert Bank.transfer(bank, "unknown_account", "creditor_account", 10) ==
+             {:error, :unknown_account}
+
     {:ok, creditor_account} = Bank.get_account(bank, "creditor_account")
     assert BankAccountAgent.balance(creditor_account) == 0
   end
@@ -45,7 +47,9 @@ defmodule BankTest do
     {:ok, debtor_account} = Bank.get_account(bank, "debtor_account")
     BankAccountAgent.deposit(debtor_account, 100)
 
-    assert Bank.transfer(bank, "debtor_account", "unknown_account", 10) == {:error, :unknown_account}
+    assert Bank.transfer(bank, "debtor_account", "unknown_account", 10) ==
+             {:error, :unknown_account}
+
     assert BankAccountAgent.balance(debtor_account) == 100
   end
 
@@ -59,9 +63,10 @@ defmodule BankTest do
     {:ok, creditor_account} = Bank.get_account(bank, "creditor_account")
     BankAccountAgent.deposit(creditor_account, 100)
 
-    assert Bank.transfer(bank, "debtor_account", "creditor_account", 10) == {:error, :balance_is_not_enough}
+    assert Bank.transfer(bank, "debtor_account", "creditor_account", 10) ==
+             {:error, :balance_is_not_enough}
+
     assert BankAccountAgent.balance(debtor_account) == 9
     assert BankAccountAgent.balance(creditor_account) == 100
   end
-
 end

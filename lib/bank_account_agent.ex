@@ -39,5 +39,4 @@ defmodule BankAccountAgent do
   defp update(_, {:error, errorMsg}) do
     {:error, errorMsg}
   end
-
 end

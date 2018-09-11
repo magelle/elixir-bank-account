@@ -19,5 +19,4 @@ defmodule RouterTest do
     assert Router.getNode("9") == :beam2@kata
     assert Router.getNode("0") == :beam1@kata
   end
-
 end
