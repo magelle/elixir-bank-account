@@ -9,6 +9,7 @@ defmodule MySupervisor do
       children = [
           {DynamicSupervisor, name: AccountSupervisor, strategy: :one_for_one},
           {Task.Supervisor, name: Router},
+          {PartitionedBank, name: PartitionedBank},
       ]
 
       Supervisor.init(children, strategy: :one_for_all)

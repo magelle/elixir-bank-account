@@ -45,7 +45,6 @@ defmodule Bank do
   @impl true
   def handle_call({:create, accountId}, _from, accounts) do
     res = DynamicSupervisor.start_child(AccountSupervisor, BankAccountAgent)
-    IO.inspect res
     {:ok, newAccount} = res
     accounts = Map.put(accounts, accountId, newAccount)
     {:reply, {:ok, newAccount}, accounts}

@@ -2,7 +2,8 @@ defmodule PartitionedBank do
   use GenServer
 
   def start_link(opts) do
-    GenServer.start_link(__MODULE__, opts)
+    server = Keyword.fetch!(opts, :name)
+    GenServer.start_link(__MODULE__, server, opts)
   end
 
   def create_account(bank, accountId) do
@@ -24,8 +25,8 @@ defmodule PartitionedBank do
     result2 = get(bank, accountId2)
     case {result1, result2} do
       {{:ok, account1}, {:ok, account2}} -> {:ok, account1, account2}
-      {{:error, errorMsg}, _} -> {:error, errorMsg}
-      {_, {:error, errorMsg}} -> {:error, errorMsg}
+      {{:error, _errorMsg}, _} -> {:error, :unknwon_debtor}
+      {_, {:error, _errorMsg}} -> {:error, :unknown_creditor}
     end
   end
 
@@ -43,7 +44,7 @@ defmodule PartitionedBank do
 
   @impl true
   def handle_call({:create, accountId}, _from, accounts) do
-    {:ok, newAccount} = Router.route(accountId, BankAccountAgent, :create, [])
+    {:ok, newAccount} = Router.route(accountId, BankAccountAgent, :start_link, [[]])
     accounts = Map.put(accounts, accountId, newAccount)
     {:reply, {:ok, newAccount}, accounts}
   end
