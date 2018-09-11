@@ -7,6 +7,7 @@ defmodule MySupervisor do
 
   def init(:ok) do
       children = [
+          {DynamicSupervisor, name: AccountSupervisor, strategy: :one_for_one},
           {Task.Supervisor, name: Router},
       ]
 

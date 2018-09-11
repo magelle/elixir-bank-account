@@ -3,7 +3,7 @@
               {description,"bank_account_elixir"},
               {modules,['Elixir.App','Elixir.Bank','Elixir.BankAccount',
                         'Elixir.BankAccountAgent','Elixir.MySupervisor',
-                        'Elixir.Router']},
+                        'Elixir.PartitionedBank','Elixir.Router']},
               {registered,[]},
               {vsn,"0.1.0"},
               {mod,{'Elixir.App',[]}}]}.

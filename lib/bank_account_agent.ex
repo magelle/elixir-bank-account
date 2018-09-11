@@ -1,10 +1,7 @@
 defmodule BankAccountAgent do
   use Agent, restart: :temporary
 
-  @doc """
-  Create a new account
-  """
-  def create() do
+  def start_link(_opts) do
     {:ok, account} = BankAccount.create()
     Agent.start_link(fn -> account end)
   end

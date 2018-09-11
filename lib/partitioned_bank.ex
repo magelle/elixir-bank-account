@@ -1,9 +1,8 @@
-defmodule Bank do
+defmodule PartitionedBank do
   use GenServer
 
   def start_link(opts) do
-    server = Keyword.fetch!(opts, :name)
-    GenServer.start_link(__MODULE__, server, opts)
+    GenServer.start_link(__MODULE__, opts)
   end
 
   def create_account(bank, accountId) do
@@ -16,8 +15,8 @@ defmodule Bank do
 
   def transfer(bank, debtorAccountId, creditorAccountId, amount) do
     with {:ok, debtorAccount, creditorAccount} <- getBoth(bank, debtorAccountId, creditorAccountId),
-         :ok <- BankAccountAgent.withdraw(debtorAccount, amount),
-         do: BankAccountAgent.deposit(creditorAccount, amount)
+         :ok <- Router.route(debtorAccountId, BankAccountAgent, :withdraw, [debtorAccount, amount]),
+         do: Router.route(creditorAccountId, BankAccountAgent, :deposit, [creditorAccount, amount])
   end
 
   defp getBoth(bank, accountId1, accountId2) do
@@ -44,9 +43,7 @@ defmodule Bank do
 
   @impl true
   def handle_call({:create, accountId}, _from, accounts) do
-    res = DynamicSupervisor.start_child(AccountSupervisor, BankAccountAgent)
-    IO.inspect res
-    {:ok, newAccount} = res
+    {:ok, newAccount} = Router.route(accountId, BankAccountAgent, :create, [])
     accounts = Map.put(accounts, accountId, newAccount)
     {:reply, {:ok, newAccount}, accounts}
   end

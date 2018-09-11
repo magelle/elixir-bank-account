@@ -1,9 +1,9 @@
 defmodule BankTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
-  setup do
-    {:ok, bank} = Bank.create({})
-    %{bank: bank}
+  setup context do
+    _ = start_supervised!({Bank, name: context.test})
+    %{bank: context.test}
   end
 
   test "Create an account", %{bank: bank} do

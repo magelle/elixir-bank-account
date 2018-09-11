@@ -2,7 +2,7 @@ defmodule BankAccountAgentTest do
   use ExUnit.Case, async: true
 
   setup do
-    {:ok, account} = BankAccountAgent.create()
+    {:ok, account} = BankAccountAgent.start_link([])
     %{account: account}
   end
 
